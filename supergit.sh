@@ -12,7 +12,7 @@ supergit()
 {
     case "$1" in
         version)
-            echo "supergit 0.1.0"
+            echo "supergit 0.2.0"
         ;;
         help)
             fmt_cmd()

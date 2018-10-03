@@ -13,6 +13,7 @@ __supergit__complete__()
     COMPREPLY=( $(compgen -W "${commands}" -- ${cur}) )
 }
 complete -F __supergit__complete__ supergit
+complete -F __supergit__complete__ sgit
 
 __by__complete__()
 {
