@@ -1,0 +1,29 @@
+#!/bin/bash
+
+__supergit__complete__()
+{
+    local cur prev commands
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    if [ $COMP_CWORD -eq 1 ]; then
+        commands="version help update"
+    fi
+    COMPREPLY=( $(compgen -W "${commands}" -- ${cur}) )
+}
+complete -F __supergit__complete__ supergit
+
+__by__complete__()
+{
+    local cur prev users
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    users="!(git contributors)\nme"
+    COMPREPLY=( $(compgen -W "${users}" -- ${cur}) )
+}
+complete -F __by__complete__ 'git by'
+
+complete -F _git_checkout 'git pushd'

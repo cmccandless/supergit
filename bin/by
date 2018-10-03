@@ -1,0 +1,7 @@
+#!/bin/bash
+AUTHOR="${1:-me}"
+ARGS="${@:2}"
+if [ "$AUTHOR" == "me" ]; then
+    AUTHOR="$(git config --get user.name)"
+fi
+git log --author "$AUTHOR" $ARGS

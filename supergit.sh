@@ -1,7 +1,7 @@
 #!/bin/bash
 # supergit.sh
 
-SUPERGIT_DIR=`dirname "$BASH_SOURCE"`
+export SUPERGIT_DIR=`dirname "$BASH_SOURCE"`
 
 source /usr/share/bash-completion/completions/git
 
@@ -32,7 +32,7 @@ supergit()
         update)
             (
                 cd $SUPERGIT_DIR
-                git pull https://github.com/cmccandless/supergit.git master:master
+                git pull -f https://github.com/cmccandless/supergit.git master:master
             )
         ;;
         *)
@@ -43,26 +43,10 @@ supergit()
 }
 alias sgit=supergit
 
-# Source: https://stackoverflow.com/a/5151020/3229611
-git config --global alias.pushd '!f()
-{
-    SUBDIRECTORY_OK=1
-    . $(git --exec-path)/git-sh-setup
+for filename in $(ls $SUPERGIT_DIR/bin); do
+    git config --global alias.$filename "!bash $SUPERGIT_DIR/bin/$filename"
+done
 
-    git symbolic-ref HEAD | sed s_refs/heads/__ >> $GIT_DIR/.pushd
-    git checkout "$@"
-};
-f'
-__git_complete git-pushd _git_checkout
-__git_complete 'git pushd' _git_checkout
-git config --global alias.popd '!f()
-{
-    SUBDIRECTORY_OK=1
-    . $(git --exec-path)/git-sh-setup
+git config --global alias.users '!git contributors'
 
-    REF=$(head -n1 $GIT_DIR/.pushd)
-
-    [ -n "$REF" ] || die "No refs to pop"
-    git checkout "$REF" && sed -i -e '1d' $GIT_DIR/.pushd
-};
-f'
+source $SUPERGIT_DIR/bash-completion

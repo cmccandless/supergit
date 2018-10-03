@@ -1,0 +1,7 @@
+#!/bin/bash
+# Source: https://stackoverflow.com/a/5151020/3229611
+SUBDIRECTORY_OK=1
+. $(git --exec-path)/git-sh-setup
+
+git symbolic-ref HEAD | sed s_refs/heads/__ >> $GIT_DIR/.pushd
+git checkout "$@"
