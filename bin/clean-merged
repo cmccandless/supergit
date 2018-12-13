@@ -1,0 +1,8 @@
+#!/bin/bash
+merged="$(git branch --merged | grep -vE '*|master')"
+if [ ! -z "$merged" ]; then
+    echo "$merged" | xargs -n1 git branch -d
+else
+    echo 'No merged branches to remove'
+    exit 1
+fi
